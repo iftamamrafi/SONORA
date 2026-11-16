@@ -1,5 +1,5 @@
 /* SONORA PWA service worker — offline app shell */
-const CACHE = 'sonora-pwa-v2';
+const CACHE = 'sonora-pwa-v3';
 const SHELL = [
   './',
   './index.html',

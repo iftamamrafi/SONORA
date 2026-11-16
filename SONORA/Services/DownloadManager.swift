@@ -17,10 +17,13 @@ final class DownloadManager: NSObject {
     var errorMessage: String?
     private var tasks: [UUID: URLSessionDownloadTask] = [:]
     private var resumeData: [UUID: Data] = [:]
-    private lazy var session: URLSession = {
-        URLSession(configuration: .default, delegate: self, delegateQueue: nil)
-    }()
+    private var session: URLSession!
     var modelContext: ModelContext?
+
+    override init() {
+        super.init()
+        session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
+    }
 
     func download(_ track: TrackSnapshot) {
         guard track.downloadable, let s = track.streamURLString, let url = URL(string: s) else {

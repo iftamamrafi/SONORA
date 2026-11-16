@@ -29,11 +29,16 @@ jobs:
       - name: Generate binary assets (icons, sample tone)
         run: python3 scripts/generate_assets.py
 
-      - name: Select Xcode 26 (if present)
+      - name: Select newest Xcode 26
         run: |
-          if [ -d "/Applications/Xcode_26.0.app" ]; then
-            sudo xcode-select -s /Applications/Xcode_26.0.app
+          ls /Applications | grep -i xcode || true
+          xcrun simctl list runtimes 2>/dev/null | grep -i ios | while IFS= read -r line; do echo "::notice::runtime: $line"; done
+          LATEST=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -n "$LATEST" ]; then
+            echo "::notice::selecting $LATEST"
+            sudo xcode-select -s "$LATEST"
           fi
+          xcodebuild -version | while IFS= read -r line; do echo "::notice::xcode: $line"; done
           xcodebuild -version
 
       - name: Build SONORA (unsigned, Release, iphoneos)

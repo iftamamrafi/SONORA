@@ -80,11 +80,11 @@ final class PlaybackManager {
             guard let self, let info = note.userInfo,
                   let raw = info[AVAudioSessionInterruptionTypeKey] as? UInt,
                   let type = AVAudioSession.InterruptionType(rawValue: raw) else { return }
+            let opts = info[AVAudioSessionInterruptionOptionKey] as? UInt ?? 0
             Task { @MainActor in
                 switch type {
                 case .began: self.wasPlayingBeforeInterruption = self.isPlaying; self.pauseInternal()
                 case .ended:
-                    let opts = info[AVAudioSessionInterruptionOptionKey] as? UInt ?? 0
                     if AVAudioSession.InterruptionOptions(rawValue: opts).contains(.shouldResume), self.wasPlayingBeforeInterruption { self.resume() }
                 @unknown default: break
                 }

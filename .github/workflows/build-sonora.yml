@@ -1,0 +1,68 @@
+# SONORA — free unsigned iOS build via GitHub Actions.
+#
+# IMPORTANT: This file must sit at the ROOT of the GitHub repository.
+# Push the CONTENTS of the SONORA-iOS folder as the repository root
+# (so SONORA.xcodeproj and this .github folder are both at the top level).
+#
+# The workflow builds the app unsigned and packages SONORA-unsigned.ipa.
+# An unsigned IPA is NOT directly installable — sign it with Sideloadly
+# (free Apple ID) on Windows. See BUILD.md.
+
+name: Build SONORA (unsigned IPA)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build unsigned IPA
+    # GitHub's macOS 26 image ships Xcode 26. If this label is ever
+    # unavailable on your account, switch to `macos-15` and add a step
+    # that selects an Xcode 26 install if present.
+    runs-on: macos-26
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Generate binary assets (icons, sample tone)
+        run: python3 scripts/generate_assets.py
+
+      - name: Select Xcode 26 (if present)
+        run: |
+          if [ -d "/Applications/Xcode_26.0.app" ]; then
+            sudo xcode-select -s /Applications/Xcode_26.0.app
+          fi
+          xcodebuild -version
+
+      - name: Build SONORA (unsigned, Release, iphoneos)
+        run: |
+          set -e
+          xcodebuild \
+            -project SONORA.xcodeproj \
+            -scheme SONORA \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Package unsigned IPA
+        run: |
+          set -e
+          APP_PATH="build/Build/Products/Release-iphoneos/SONORA.app"
+          test -d "$APP_PATH"
+          rm -rf Payload SONORA-unsigned.ipa
+          mkdir -p Payload
+          cp -R "$APP_PATH" Payload/
+          /usr/bin/zip -r SONORA-unsigned.ipa Payload
+          test -f SONORA-unsigned.ipa
+          unzip -l SONORA-unsigned.ipa
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SONORA-unsigned-ipa
+          path: SONORA-unsigned.ipa
+          retention-days: 14

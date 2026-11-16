@@ -294,7 +294,7 @@
 <div id="toast"></div>
 <input type="file" id="filePicker" accept="audio/*" multiple hidden>
 <input type="file" id="lrcPicker" accept=".lrc,text/plain" hidden>
-<audio id="audio" crossorigin="anonymous" preload="auto"></audio>
+<audio id="audio" preload="auto"></audio>
 
 <script>
 'use strict';
@@ -349,7 +349,7 @@ let queue = [], qIndex = -1, currentId = null;
 let shuffle = false, repeat = 'off'; // off | all | one
 let segment = 'all', query = '';
 let sleepTimer = null, sleepMins = 0;
-const audio = $('#audio');
+let audio = $('#audio');
 
 function toast(msg, ms) {
   const t = $('#toast');
@@ -456,7 +456,7 @@ async function toggleDownload(id) {
     downloaded.add(id);
     toast('Saved for offline · ' + (blob.size / 1048576).toFixed(1) + ' MB');
   } catch (e) {
-    toast('Download failed — check your connection');
+    toast('Download failed — this source does not allow downloads');
   }
   renderList(); syncNpButtons();
 }
@@ -503,6 +503,10 @@ let curPreset = localStorage.getItem('sonora-eq-preset') || 'Flat';
 
 function ensureEngine() {
   if (actx) { if (actx.state === 'suspended') actx.resume(); return; }
+  // EQ graph only for local (blob) sources. Routing a cross-origin stream
+  // through a MediaElementSource silences it, because the demo server
+  // sends no CORS headers — remote songs must play directly.
+  if (!audio.src || audio.src.indexOf('blob:') !== 0) return;
   try {
     actx = new (window.AudioContext || window.webkitAudioContext)();
     const src = actx.createMediaElementSource(audio);
@@ -568,12 +572,27 @@ async function trackSource(t) {
   }
   return t.url || null;
 }
+function resetAudioElement() {
+  // The EQ graph captures the element it was built on. A fresh element
+  // restores direct playback for remote streams after EQ was used locally.
+  const fresh = document.createElement('audio');
+  fresh.id = 'audio';
+  fresh.preload = 'auto';
+  fresh.volume = ($('#vol').value || 90) / 100;
+  try { audio.pause(); } catch (e) {}
+  audio.replaceWith(fresh);
+  audio = fresh;
+  bindAudio(audio);
+  if (actx) { try { actx.close(); } catch (e) {} }
+  actx = null; filters = []; gainNode = null; eqReady = false;
+}
 async function playTrack(id, autoplay) {
   const t = tracks.find((x) => x.id === id);
   if (!t) return;
   currentId = id;
   const src = await trackSource(t);
   if (!src) { toast('No playable source for this song'); return; }
+  if (src.indexOf('blob:') !== 0 && eqReady) resetAudioElement();
   if (audio.dataset.tid !== id) {
     audio.src = src;
     audio.dataset.tid = id;
@@ -677,16 +696,17 @@ $('#btnRepeat').addEventListener('click', () => {
   toast('Repeat: ' + repeat);
   syncNpButtons();
 });
-audio.addEventListener('play', syncPlayIcons);
-audio.addEventListener('pause', syncPlayIcons);
-audio.addEventListener('ended', () => next(true));
-audio.addEventListener('error', () => {
+function bindAudio(el) {
+el.addEventListener('play', syncPlayIcons);
+el.addEventListener('pause', syncPlayIcons);
+el.addEventListener('ended', () => next(true));
+el.addEventListener('error', () => {
   if (currentId) toast('Could not play this song');
 });
-audio.addEventListener('loadedmetadata', () => {
+el.addEventListener('loadedmetadata', () => {
   $('#tDur').textContent = fmt(audio.duration);
 });
-audio.addEventListener('timeupdate', () => {
+el.addEventListener('timeupdate', () => {
   const d = audio.duration || 0, c = audio.currentTime || 0;
   const seek = $('#seek');
   if (document.activeElement !== seek) {
@@ -699,6 +719,8 @@ audio.addEventListener('timeupdate', () => {
     try { navigator.mediaSession.setPositionState({ duration: d, position: c, playbackRate: audio.playbackRate }); } catch (e) {}
   }
 });
+}
+bindAudio(audio);
 $('#seek').addEventListener('input', (e) => {
   const d = audio.duration || 0;
   const v = +e.target.value;

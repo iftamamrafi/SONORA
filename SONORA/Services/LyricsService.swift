@@ -15,7 +15,7 @@ enum LyricsService {
             let asset = AVURLAsset(url: fileURL)
             if let items = try? await asset.load(.metadata) {
                 for item in items {
-                    let idf = item.identifier
+                    let idf = item.identifier?.rawValue ?? ""
                     if idf.lowercased().contains("lyr") {
                         if let s = try? await item.load(.stringValue), !s.isEmpty {
                             let lines = LRCParser.parse(s)

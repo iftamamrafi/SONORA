@@ -30,7 +30,7 @@ enum MetadataService {
         guard let items = try? await asset.load(.metadata) else { return meta }
         for item in items {
             guard let key = item.commonKey?.rawValue else {
-                if item.identifier.lowercased().contains("lyr") {
+                if item.identifier?.rawValue.lowercased().contains("lyr") == true {
                     if let s = try? await item.load(.stringValue) { meta.lyrics = s }
                 }
                 continue

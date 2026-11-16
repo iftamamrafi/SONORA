@@ -23,6 +23,7 @@ struct EQPreset: Identifiable, Equatable {
 
 /// Real equalizer playback for LOCAL files: AVAudioPlayerNode -> AVAudioUnitEQ (10 bands) -> output.
 /// Remote streams cannot pass through this engine; PlaybackManager keeps those on AVPlayer.
+@MainActor
 final class LocalEQPlayer {
     private let engine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()

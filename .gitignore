@@ -1,0 +1,7 @@
+# Generated at build time by scripts/generate_assets.py
+SONORA/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-*.png
+SONORA/Resources/SampleTone.wav
+build/
+Payload/
+*.ipa
+.DS_Store

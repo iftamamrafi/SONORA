@@ -206,7 +206,7 @@
 			files = (
 				00000000000000000000005C /* SONORAWidgets.appex in Embed Foundation Extensions */,
 			);
-			name = Embed Foundation Extensions;
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 			dstPath = "";
 			dstSubfolderSpec = 13;

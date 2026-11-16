@@ -101,19 +101,20 @@ enum LocalMusicService {
             return (asset.id, docs.appendingPathComponent(rel).path)
         }
         guard !checks.isEmpty else { return }
-        Task.detached(priority: .utility) {
-            var results: [UUID: Bool] = [:]
-            for (id, path) in checks { results[id] = FileManager.default.fileExists(atPath: path) }
-            await MainActor.run {
-                let fresh = (try? context.fetch(FetchDescriptor<LocalAssetEntity>())) ?? []
-                var changed = false
-                for asset in fresh {
-                    guard let exists = results[asset.id] else { continue }
-                    let newValue = exists ? "available" : "missing"
-                    if asset.availabilityRaw != newValue { asset.availabilityRaw = newValue; changed = true }
-                }
-                if changed { try? context.save() }
+        Task { @MainActor in
+            let results = await Task.detached(priority: .utility) {
+                var r: [UUID: Bool] = [:]
+                for (id, path) in checks { r[id] = FileManager.default.fileExists(atPath: path) }
+                return r
+            }.value
+            let fresh = (try? context.fetch(FetchDescriptor<LocalAssetEntity>())) ?? []
+            var changed = false
+            for asset in fresh {
+                guard let exists = results[asset.id] else { continue }
+                let newValue = exists ? "available" : "missing"
+                if asset.availabilityRaw != newValue { asset.availabilityRaw = newValue; changed = true }
             }
+            if changed { try? context.save() }
         }
     }
 

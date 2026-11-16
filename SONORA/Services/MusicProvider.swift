@@ -1,7 +1,7 @@
 
 import Foundation
 
-protocol MusicProvider {
+protocol MusicProvider: Sendable {
     var providerName: String { get }
     var isConfigured: Bool { get }
     func search(query: String) async throws -> [TrackSnapshot]

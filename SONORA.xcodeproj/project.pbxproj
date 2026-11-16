@@ -1,0 +1,1068 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+		000000000000000000000031 /* SONORAApp.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000001 /* SONORAApp.swift */;
+		};
+		000000000000000000000032 /* AppState.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000002 /* AppState.swift */;
+		};
+		000000000000000000000033 /* RootView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000003 /* RootView.swift */;
+		};
+		000000000000000000000034 /* Models.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000004 /* Models.swift */;
+		};
+		000000000000000000000035 /* Entities.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000005 /* Entities.swift */;
+		};
+		000000000000000000000036 /* PlaybackQueue.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000006 /* PlaybackQueue.swift */;
+		};
+		000000000000000000000037 /* LRCParser.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000007 /* LRCParser.swift */;
+		};
+		000000000000000000000038 /* PreferencesStore.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000008 /* PreferencesStore.swift */;
+		};
+		000000000000000000000039 /* DesignSystem.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000009 /* DesignSystem.swift */;
+		};
+		00000000000000000000003A /* NetworkMonitor.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000000A /* NetworkMonitor.swift */;
+		};
+		00000000000000000000003B /* MusicProvider.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000000B /* MusicProvider.swift */;
+		};
+		00000000000000000000003C /* MetadataService.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000000C /* MetadataService.swift */;
+		};
+		00000000000000000000003D /* LocalMusicService.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000000D /* LocalMusicService.swift */;
+		};
+		00000000000000000000003E /* LyricsService.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000000E /* LyricsService.swift */;
+		};
+		00000000000000000000003F /* ArtworkCache.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000000F /* ArtworkCache.swift */;
+		};
+		000000000000000000000040 /* LocalEQPlayer.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000010 /* LocalEQPlayer.swift */;
+		};
+		000000000000000000000041 /* PlaybackManager.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000011 /* PlaybackManager.swift */;
+		};
+		000000000000000000000042 /* DownloadManager.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000012 /* DownloadManager.swift */;
+		};
+		000000000000000000000043 /* LiveActivityManager.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000013 /* LiveActivityManager.swift */;
+		};
+		000000000000000000000044 /* NowPlayingActivityAttributes.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000014 /* NowPlayingActivityAttributes.swift */;
+		};
+		000000000000000000000045 /* SharedViews.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000015 /* SharedViews.swift */;
+		};
+		000000000000000000000046 /* HomeView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000016 /* HomeView.swift */;
+		};
+		000000000000000000000047 /* ExploreView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000017 /* ExploreView.swift */;
+		};
+		000000000000000000000048 /* LibraryView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000018 /* LibraryView.swift */;
+		};
+		000000000000000000000049 /* SearchView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000019 /* SearchView.swift */;
+		};
+		00000000000000000000004A /* DetailViews.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000001A /* DetailViews.swift */;
+		};
+		00000000000000000000004B /* PlaylistsView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000001B /* PlaylistsView.swift */;
+		};
+		00000000000000000000004C /* LibraryExtras.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000001C /* LibraryExtras.swift */;
+		};
+		00000000000000000000004D /* MiniPlayerView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000001D /* MiniPlayerView.swift */;
+		};
+		00000000000000000000004E /* NowPlayingView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000001E /* NowPlayingView.swift */;
+		};
+		00000000000000000000004F /* QueueView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000001F /* QueueView.swift */;
+		};
+		000000000000000000000050 /* LyricsView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000020 /* LyricsView.swift */;
+		};
+		000000000000000000000051 /* EqualizerView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000021 /* EqualizerView.swift */;
+		};
+		000000000000000000000052 /* SettingsView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000022 /* SettingsView.swift */;
+		};
+		000000000000000000000088 /* EditTrackMetadataView.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000087 /* EditTrackMetadataView.swift */;
+		};
+		000000000000000000000053 /* Assets.xcassets */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000023 /* Assets.xcassets */;
+		};
+		000000000000000000000054 /* SampleTone.wav */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000025 /* SampleTone.wav */;
+		};
+		000000000000000000000055 /* SONORAWidgets.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000026 /* SONORAWidgets.swift */;
+		};
+		000000000000000000000056 /* NowPlayingActivityAttributes.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000014 /* NowPlayingActivityAttributes.swift */;
+		};
+		000000000000000000000057 /* QueueTests.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000028 /* QueueTests.swift */;
+		};
+		000000000000000000000058 /* ShuffleRepeatTests.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 000000000000000000000029 /* ShuffleRepeatTests.swift */;
+		};
+		000000000000000000000059 /* LRCParserTests.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000002A /* LRCParserTests.swift */;
+		};
+		00000000000000000000005A /* PlaylistTests.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000002B /* PlaylistTests.swift */;
+		};
+		00000000000000000000005B /* SearchAndMetadataTests.swift */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000002C /* SearchAndMetadataTests.swift */;
+		};
+		00000000000000000000005C /* SONORAWidgets.appex in Embed Foundation Extensions */ = {
+			isa = PBXBuildFile;
+			fileRef = 00000000000000000000002F /* SONORAWidgets.appex */;
+			settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); };
+		};
+		000000000000000000000083 /* SONORAWidgets */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00000000000000000000007F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000000080;
+			remoteInfo = SONORAWidgets;
+		};
+		000000000000000000000084 /* SONORA */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00000000000000000000007F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000000081;
+			remoteInfo = SONORA;
+		};
+		00000000000000000000006C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00000000000000000000005C /* SONORAWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = Embed Foundation Extensions;
+			runOnlyForDeploymentPostprocessing = 0;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+		};
+		000000000000000000000001 /* SONORAApp.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = SONORAApp.swift;
+			path = SONORA/App/SONORAApp.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000002 /* AppState.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = AppState.swift;
+			path = SONORA/App/AppState.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000003 /* RootView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = RootView.swift;
+			path = SONORA/App/RootView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000004 /* Models.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = Models.swift;
+			path = SONORA/Core/Models.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000005 /* Entities.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = Entities.swift;
+			path = SONORA/Core/Entities.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000006 /* PlaybackQueue.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = PlaybackQueue.swift;
+			path = SONORA/Core/PlaybackQueue.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000007 /* LRCParser.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = LRCParser.swift;
+			path = SONORA/Core/LRCParser.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000008 /* PreferencesStore.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = PreferencesStore.swift;
+			path = SONORA/Core/PreferencesStore.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000009 /* DesignSystem.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = DesignSystem.swift;
+			path = SONORA/Core/DesignSystem.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000000A /* NetworkMonitor.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = NetworkMonitor.swift;
+			path = SONORA/Services/NetworkMonitor.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000000B /* MusicProvider.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = MusicProvider.swift;
+			path = SONORA/Services/MusicProvider.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000000C /* MetadataService.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = MetadataService.swift;
+			path = SONORA/Services/MetadataService.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000000D /* LocalMusicService.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = LocalMusicService.swift;
+			path = SONORA/Services/LocalMusicService.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000000E /* LyricsService.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = LyricsService.swift;
+			path = SONORA/Services/LyricsService.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000000F /* ArtworkCache.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = ArtworkCache.swift;
+			path = SONORA/Services/ArtworkCache.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000010 /* LocalEQPlayer.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = LocalEQPlayer.swift;
+			path = SONORA/Services/LocalEQPlayer.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000011 /* PlaybackManager.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = PlaybackManager.swift;
+			path = SONORA/Services/PlaybackManager.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000012 /* DownloadManager.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = DownloadManager.swift;
+			path = SONORA/Services/DownloadManager.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000013 /* LiveActivityManager.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = LiveActivityManager.swift;
+			path = SONORA/Services/LiveActivityManager.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000014 /* NowPlayingActivityAttributes.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = NowPlayingActivityAttributes.swift;
+			path = SONORA/Shared/NowPlayingActivityAttributes.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000015 /* SharedViews.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = SharedViews.swift;
+			path = SONORA/Components/SharedViews.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000016 /* HomeView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = HomeView.swift;
+			path = SONORA/Features/HomeView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000017 /* ExploreView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = ExploreView.swift;
+			path = SONORA/Features/ExploreView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000018 /* LibraryView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = LibraryView.swift;
+			path = SONORA/Features/LibraryView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000019 /* SearchView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = SearchView.swift;
+			path = SONORA/Features/SearchView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000001A /* DetailViews.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = DetailViews.swift;
+			path = SONORA/Features/DetailViews.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000001B /* PlaylistsView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = PlaylistsView.swift;
+			path = SONORA/Features/PlaylistsView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000001C /* LibraryExtras.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = LibraryExtras.swift;
+			path = SONORA/Features/LibraryExtras.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000001D /* MiniPlayerView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = MiniPlayerView.swift;
+			path = SONORA/Features/MiniPlayerView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000001E /* NowPlayingView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = NowPlayingView.swift;
+			path = SONORA/Features/NowPlayingView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000001F /* QueueView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = QueueView.swift;
+			path = SONORA/Features/QueueView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000020 /* LyricsView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = LyricsView.swift;
+			path = SONORA/Features/LyricsView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000021 /* EqualizerView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = EqualizerView.swift;
+			path = SONORA/Features/EqualizerView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000022 /* SettingsView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = SettingsView.swift;
+			path = SONORA/Features/SettingsView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000087 /* EditTrackMetadataView.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = EditTrackMetadataView.swift;
+			path = SONORA/Features/EditTrackMetadataView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000023 /* Assets.xcassets */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = folder.assetcatalog;
+			name = Assets.xcassets;
+			path = SONORA/Resources/Assets.xcassets;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000024 /* Info.plist */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			name = Info.plist;
+			path = SONORA/Resources/Info.plist;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000025 /* SampleTone.wav */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = audio.wav;
+			name = SampleTone.wav;
+			path = SONORA/Resources/SampleTone.wav;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000026 /* SONORAWidgets.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = SONORAWidgets.swift;
+			path = SONORAWidgets/SONORAWidgets.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000027 /* Info.plist */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			name = Info.plist;
+			path = SONORAWidgets/Info.plist;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000028 /* QueueTests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = QueueTests.swift;
+			path = SONORAUnitTests/QueueTests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		000000000000000000000029 /* ShuffleRepeatTests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = ShuffleRepeatTests.swift;
+			path = SONORAUnitTests/ShuffleRepeatTests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000002A /* LRCParserTests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = LRCParserTests.swift;
+			path = SONORAUnitTests/LRCParserTests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000002B /* PlaylistTests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = PlaylistTests.swift;
+			path = SONORAUnitTests/PlaylistTests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000002C /* SearchAndMetadataTests.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			name = SearchAndMetadataTests.swift;
+			path = SONORAUnitTests/SearchAndMetadataTests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000002D /* Info.plist */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			name = Info.plist;
+			path = SONORAUnitTests/Info.plist;
+			sourceTree = SOURCE_ROOT;
+		};
+		00000000000000000000002E /* SONORA.app */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.application;
+			name = SONORA.app;
+			path = SONORA.app;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00000000000000000000002F /* SONORAWidgets.appex */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.app-extension;
+			name = SONORAWidgets.appex;
+			path = SONORAWidgets.appex;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		000000000000000000000030 /* SONORAUnitTests.xctest */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.cfbundle;
+			name = SONORAUnitTests.xctest;
+			path = SONORAUnitTests.xctest;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		00000000000000000000006B /* PBXFrameworksBuildPhase */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00000000000000000000006F /* PBXFrameworksBuildPhase */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000072 /* PBXFrameworksBuildPhase */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00000000000000000000005D /* App */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000001 /* SONORAApp.swift */,
+				000000000000000000000002 /* AppState.swift */,
+				000000000000000000000003 /* RootView.swift */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		00000000000000000000005E /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000004 /* Models.swift */,
+				000000000000000000000005 /* Entities.swift */,
+				000000000000000000000006 /* PlaybackQueue.swift */,
+				000000000000000000000007 /* LRCParser.swift */,
+				000000000000000000000008 /* PreferencesStore.swift */,
+				000000000000000000000009 /* DesignSystem.swift */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		00000000000000000000005F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000000A /* NetworkMonitor.swift */,
+				00000000000000000000000B /* MusicProvider.swift */,
+				00000000000000000000000C /* MetadataService.swift */,
+				00000000000000000000000D /* LocalMusicService.swift */,
+				00000000000000000000000E /* LyricsService.swift */,
+				00000000000000000000000F /* ArtworkCache.swift */,
+				000000000000000000000010 /* LocalEQPlayer.swift */,
+				000000000000000000000011 /* PlaybackManager.swift */,
+				000000000000000000000012 /* DownloadManager.swift */,
+				000000000000000000000013 /* LiveActivityManager.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		000000000000000000000060 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000014 /* NowPlayingActivityAttributes.swift */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		000000000000000000000061 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000015 /* SharedViews.swift */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		000000000000000000000062 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000016 /* HomeView.swift */,
+				000000000000000000000017 /* ExploreView.swift */,
+				000000000000000000000018 /* LibraryView.swift */,
+				000000000000000000000019 /* SearchView.swift */,
+				00000000000000000000001A /* DetailViews.swift */,
+				00000000000000000000001B /* PlaylistsView.swift */,
+				00000000000000000000001C /* LibraryExtras.swift */,
+				00000000000000000000001D /* MiniPlayerView.swift */,
+				00000000000000000000001E /* NowPlayingView.swift */,
+				00000000000000000000001F /* QueueView.swift */,
+				000000000000000000000020 /* LyricsView.swift */,
+				000000000000000000000021 /* EqualizerView.swift */,
+				000000000000000000000022 /* SettingsView.swift */,
+				000000000000000000000087 /* EditTrackMetadataView.swift */,
+			);
+			name = Features;
+			sourceTree = "<group>";
+		};
+		000000000000000000000063 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000023 /* Assets.xcassets */,
+				000000000000000000000024 /* Info.plist */,
+				000000000000000000000025 /* SampleTone.wav */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		000000000000000000000064 /* SONORA */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000005D /* App */,
+				00000000000000000000005E /* Core */,
+				00000000000000000000005F /* Services */,
+				000000000000000000000060 /* Shared */,
+				000000000000000000000061 /* Components */,
+				000000000000000000000062 /* Features */,
+				000000000000000000000063 /* Resources */,
+			);
+			name = SONORA;
+			sourceTree = "<group>";
+		};
+		000000000000000000000065 /* SONORAWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000026 /* SONORAWidgets.swift */,
+				000000000000000000000027 /* Info.plist */,
+			);
+			name = SONORAWidgets;
+			sourceTree = "<group>";
+		};
+		000000000000000000000066 /* SONORAUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000028 /* QueueTests.swift */,
+				000000000000000000000029 /* ShuffleRepeatTests.swift */,
+				00000000000000000000002A /* LRCParserTests.swift */,
+				00000000000000000000002B /* PlaylistTests.swift */,
+				00000000000000000000002C /* SearchAndMetadataTests.swift */,
+				00000000000000000000002D /* Info.plist */,
+			);
+			name = SONORAUnitTests;
+			sourceTree = "<group>";
+		};
+		000000000000000000000067 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000002E /* SONORA.app */,
+				00000000000000000000002F /* SONORAWidgets.appex */,
+				000000000000000000000030 /* SONORAUnitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		000000000000000000000068 /* group */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000064 /* SONORA */,
+				000000000000000000000065 /* SONORAWidgets */,
+				000000000000000000000066 /* SONORAUnitTests */,
+				000000000000000000000067 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		000000000000000000000080 /* SONORAWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00000000000000000000007B /* config list */;
+			buildPhases = (
+				00000000000000000000006D /* PBXSourcesBuildPhase */,
+				00000000000000000000006F /* PBXFrameworksBuildPhase */,
+				00000000000000000000006E /* PBXResourcesBuildPhase */,
+			);
+			buildRules = ();
+			dependencies = (
+			);
+			name = SONORAWidgets;
+			productName = SONORAWidgets;
+			productReference = 00000000000000000000002F /* SONORAWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		000000000000000000000081 /* SONORA */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000078 /* config list */;
+			buildPhases = (
+				000000000000000000000069 /* PBXSourcesBuildPhase */,
+				00000000000000000000006B /* PBXFrameworksBuildPhase */,
+				00000000000000000000006A /* PBXResourcesBuildPhase */,
+				00000000000000000000006C /* Embed Foundation Extensions */,
+			);
+			buildRules = ();
+			dependencies = (
+				000000000000000000000085 /* dependency */,
+			);
+			name = SONORA;
+			productName = SONORA;
+			productReference = 00000000000000000000002E /* SONORA.app */;
+			productType = "com.apple.product-type.application";
+		};
+		000000000000000000000082 /* SONORAUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00000000000000000000007E /* config list */;
+			buildPhases = (
+				000000000000000000000070 /* PBXSourcesBuildPhase */,
+				000000000000000000000072 /* PBXFrameworksBuildPhase */,
+				000000000000000000000071 /* PBXResourcesBuildPhase */,
+			);
+			buildRules = ();
+			dependencies = (
+				000000000000000000000086 /* dependency */,
+			);
+			name = SONORAUnitTests;
+			productName = SONORAUnitTests;
+			productReference = 000000000000000000000030 /* SONORAUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		00000000000000000000007F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 2600; LastUpgradeCheck = 2600; TargetAttributes = {
+				000000000000000000000081 = {CreatedOnToolsVersion = 26.0; };
+				000000000000000000000080 = {CreatedOnToolsVersion = 26.0; };
+				000000000000000000000082 = {CreatedOnToolsVersion = 26.0; TestTargetID = 000000000000000000000081; };
+			}; };
+			buildConfigurationList = 000000000000000000000075 /* config list */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (en, Base,);
+			mainGroup = 000000000000000000000068 /* group */;
+			productRefGroup = 000000000000000000000067 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				000000000000000000000081 /* SONORA */,
+				000000000000000000000080 /* SONORAWidgets */,
+				000000000000000000000082 /* SONORAUnitTests */,
+			);
+		};
+		00000000000000000000006A /* PBXResourcesBuildPhase */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000053 /* Assets.xcassets */,
+				000000000000000000000054 /* SampleTone.wav */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00000000000000000000006E /* PBXResourcesBuildPhase */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000071 /* PBXResourcesBuildPhase */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000069 /* PBXSourcesBuildPhase */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000031 /* SONORAApp.swift */,
+				000000000000000000000032 /* AppState.swift */,
+				000000000000000000000033 /* RootView.swift */,
+				000000000000000000000034 /* Models.swift */,
+				000000000000000000000035 /* Entities.swift */,
+				000000000000000000000036 /* PlaybackQueue.swift */,
+				000000000000000000000037 /* LRCParser.swift */,
+				000000000000000000000038 /* PreferencesStore.swift */,
+				000000000000000000000039 /* DesignSystem.swift */,
+				00000000000000000000003A /* NetworkMonitor.swift */,
+				00000000000000000000003B /* MusicProvider.swift */,
+				00000000000000000000003C /* MetadataService.swift */,
+				00000000000000000000003D /* LocalMusicService.swift */,
+				00000000000000000000003E /* LyricsService.swift */,
+				00000000000000000000003F /* ArtworkCache.swift */,
+				000000000000000000000040 /* LocalEQPlayer.swift */,
+				000000000000000000000041 /* PlaybackManager.swift */,
+				000000000000000000000042 /* DownloadManager.swift */,
+				000000000000000000000043 /* LiveActivityManager.swift */,
+				000000000000000000000044 /* NowPlayingActivityAttributes.swift */,
+				000000000000000000000045 /* SharedViews.swift */,
+				000000000000000000000046 /* HomeView.swift */,
+				000000000000000000000047 /* ExploreView.swift */,
+				000000000000000000000048 /* LibraryView.swift */,
+				000000000000000000000049 /* SearchView.swift */,
+				00000000000000000000004A /* DetailViews.swift */,
+				00000000000000000000004B /* PlaylistsView.swift */,
+				00000000000000000000004C /* LibraryExtras.swift */,
+				00000000000000000000004D /* MiniPlayerView.swift */,
+				00000000000000000000004E /* NowPlayingView.swift */,
+				00000000000000000000004F /* QueueView.swift */,
+				000000000000000000000050 /* LyricsView.swift */,
+				000000000000000000000051 /* EqualizerView.swift */,
+				000000000000000000000052 /* SettingsView.swift */,
+				000000000000000000000088 /* EditTrackMetadataView.swift */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		00000000000000000000006D /* PBXSourcesBuildPhase */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000055 /* SONORAWidgets.swift */,
+				000000000000000000000056 /* NowPlayingActivityAttributes.swift */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000070 /* PBXSourcesBuildPhase */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000057 /* QueueTests.swift */,
+				000000000000000000000058 /* ShuffleRepeatTests.swift */,
+				000000000000000000000059 /* LRCParserTests.swift */,
+				00000000000000000000005A /* PlaylistTests.swift */,
+				00000000000000000000005B /* SearchAndMetadataTests.swift */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000085 /* dependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000000000080 /* dep */;
+			targetProxy = 000000000000000000000083 /* proxy */;
+		};
+		000000000000000000000086 /* dependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000000000081 /* dep */;
+			targetProxy = 000000000000000000000084 /* proxy */;
+		};
+		000000000000000000000073 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_TESTABILITY = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1", "$(inherited)");
+			};
+			name = Debug;
+		};
+		000000000000000000000074 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_TESTABILITY = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		000000000000000000000076 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SONORA/Resources/SONORA.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SONORA/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonora.musicplayer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		000000000000000000000077 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SONORA/Resources/SONORA.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SONORA/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonora.musicplayer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		000000000000000000000079 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SONORAWidgets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonora.musicplayer.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		00000000000000000000007A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SONORAWidgets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonora.musicplayer.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		00000000000000000000007C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SONORAUnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonora.musicplayer.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SONORA.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SONORA";
+			};
+			name = Debug;
+		};
+		00000000000000000000007D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SONORAUnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonora.musicplayer.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SONORA.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SONORA";
+			};
+			name = Release;
+		};
+		000000000000000000000075 /* config list */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000073 /* Debug */,
+				000000000000000000000074 /* Release */,
+			);
+			defaultConfigurationName = Release;
+			defaultConfigurationIsVisible = 0;
+		};
+		000000000000000000000078 /* config list */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000076 /* Debug */,
+				000000000000000000000077 /* Release */,
+			);
+			defaultConfigurationName = Release;
+			defaultConfigurationIsVisible = 0;
+		};
+		00000000000000000000007B /* config list */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000079 /* Debug */,
+				00000000000000000000007A /* Release */,
+			);
+			defaultConfigurationName = Release;
+			defaultConfigurationIsVisible = 0;
+		};
+		00000000000000000000007E /* config list */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00000000000000000000007C /* Debug */,
+				00000000000000000000007D /* Release */,
+			);
+			defaultConfigurationName = Release;
+			defaultConfigurationIsVisible = 0;
+		};
+	};
+	rootObject = 00000000000000000000007F /* Project object */;
+}

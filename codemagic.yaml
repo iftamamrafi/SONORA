@@ -1,0 +1,41 @@
+workflows:
+  sonora_ios_unsigned:
+    name: SONORA iOS unsigned build
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      xcode: 26.0
+    scripts:
+      - name: Show Xcode version
+        script: |
+          xcodebuild -version
+      - name: Generate binary assets (icons, sample tone)
+        script: |
+          python3 scripts/generate_assets.py
+      - name: Build unsigned iPhone app
+        script: |
+          set -e
+          PROJECT="SONORA.xcodeproj"
+          SCHEME="SONORA"
+          xcodebuild \
+            -project "$PROJECT" \
+            -scheme "$SCHEME" \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+      - name: Package unsigned IPA
+        script: |
+          set -e
+          APP_PATH="build/Build/Products/Release-iphoneos/SONORA.app"
+          test -d "$APP_PATH"
+          rm -rf Payload SONORA-unsigned.ipa
+          mkdir -p Payload
+          cp -R "$APP_PATH" Payload/
+          /usr/bin/zip -r SONORA-unsigned.ipa Payload
+          test -f SONORA-unsigned.ipa
+          unzip -l SONORA-unsigned.ipa
+    artifacts:
+      - SONORA-unsigned.ipa
+      - build/Build/Products/Release-iphoneos/*.app

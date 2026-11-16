@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SONORA</title>
+<meta name="description" content="SONORA — premium hybrid music player (web edition)">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#07070b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SONORA">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<style>
+  :root{
+    --bg:#07070b; --bg2:#0e0e16; --card:#14141f; --card2:#1b1b29;
+    --text:#f4f2ff; --dim:#9b97b3; --faint:#5d5a75;
+    --violet:#a78bfa; --cyan:#22d3ee; --pink:#f472b6;
+    --grad:linear-gradient(135deg,#a78bfa,#22d3ee);
+    --radius:18px;
+    --safe-b:env(safe-area-inset-bottom,0px);
+    --safe-t:env(safe-area-inset-top,0px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    overflow:hidden; user-select:none; -webkit-user-select:none;
+  }
+  button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  input{font-family:inherit}
+
+  /* ---------- layout ---------- */
+  #app{display:flex;flex-direction:column;height:100dvh;padding-top:var(--safe-t)}
+  header{
+    padding:14px 20px 8px;display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{font-size:26px;font-weight:800;letter-spacing:4px}
+  .logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .icon-btn{
+    width:40px;height:40px;border-radius:50%;background:var(--card);
+    display:flex;align-items:center;justify-content:center;font-size:18px;flex:none;
+  }
+  .icon-btn:active{background:var(--card2)}
+  main{flex:1;overflow-y:auto;padding:4px 16px 12px;scrollbar-width:none}
+  main::-webkit-scrollbar{display:none}
+
+  /* ---------- install hint ---------- */
+  #installHint{
+    display:none;margin:6px 4px 12px;padding:12px 14px;border-radius:var(--radius);
+    background:linear-gradient(135deg,rgba(167,139,250,.18),rgba(34,211,238,.12));
+    border:1px solid rgba(167,139,250,.35);font-size:13px;line-height:1.5;color:var(--text);
+  }
+  #installHint b{color:var(--violet)}
+
+  /* ---------- search & segments ---------- */
+  .search{
+    display:flex;align-items:center;gap:8px;background:var(--card);
+    border-radius:12px;padding:10px 12px;margin:4px 4px 12px;
+  }
+  .search input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:15px}
+  .search input::placeholder{color:var(--faint)}
+  .segments{display:flex;gap:8px;margin:0 4px 14px}
+  .seg{
+    padding:8px 16px;border-radius:999px;background:var(--card);color:var(--dim);
+    font-size:13px;font-weight:600;
+  }
+  .seg.on{background:var(--grad);color:#0b0b12}
+
+  /* ---------- track list ---------- */
+  .row{
+    display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:14px;
+  }
+  .row:active{background:var(--card)}
+  .row.playing .t-title{color:var(--violet)}
+  .cover{
+    width:52px;height:52px;border-radius:12px;flex:none;position:relative;overflow:hidden;
+    display:flex;align-items:flex-end;justify-content:center;gap:3px;padding-bottom:12px;
+  }
+  .cover i{display:block;width:5px;border-radius:3px;background:rgba(255,255,255,.85);height:10px}
+  .cover i:nth-child(2){height:18px}.cover i:nth-child(3){height:24px}.cover i:nth-child(4){height:14px}
+  .row.playing .cover i{animation:eq 0.9s ease-in-out infinite alternate}
+  .row.playing .cover i:nth-child(2){animation-delay:.15s}
+  .row.playing .cover i:nth-child(3){animation-delay:.3s}
+  .row.playing .cover i:nth-child(4){animation-delay:.45s}
+  .row.paused .cover i{animation-play-state:paused}
+  @keyframes eq{from{transform:scaleY(.4)}to{transform:scaleY(1.15)}}
+  .t-meta{flex:1;min-width:0}
+  .t-title{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .t-sub{font-size:12px;color:var(--dim);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .badge{
+    font-size:9px;font-weight:700;letter-spacing:.6px;padding:2px 6px;border-radius:5px;
+    background:rgba(34,211,238,.15);color:var(--cyan);vertical-align:2px;margin-left:6px;
+  }
+  .badge.off{background:rgba(167,139,250,.18);color:var(--violet)}
+  .dl-btn{
+    width:38px;height:38px;border-radius:50%;flex:none;font-size:16px;color:var(--dim);
+    display:flex;align-items:center;justify-content:center;background:var(--card);
+  }
+  .dl-btn.done{color:var(--cyan)}
+  .empty{padding:48px 24px;text-align:center;color:var(--faint);font-size:14px;line-height:1.7}
+
+  /* ---------- mini player ---------- */
+  #mini{
+    display:none;margin:0 12px calc(10px + var(--safe-b));padding:10px 12px;
+    background:rgba(27,27,41,.92);backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,.06);border-radius:20px;
+    align-items:center;gap:12px;box-shadow:0 12px 32px rgba(0,0,0,.5);
+  }
+  #mini.show{display:flex}
+  #mini .cover{width:44px;height:44px;border-radius:10px;padding-bottom:9px}
+  #miniPlay{width:42px;height:42px;border-radius:50%;background:var(--grad);color:#0b0b12;font-size:17px;flex:none;display:flex;align-items:center;justify-content:center}
+  #miniNext{font-size:19px;color:var(--dim);padding:6px;flex:none}
+
+  /* ---------- now playing ---------- */
+  #np{
+    position:fixed;inset:0;background:linear-gradient(180deg,#12101f,#07070b 60%);
+    transform:translateY(102%);transition:transform .38s cubic-bezier(.32,.72,.24,1);
+    display:flex;flex-direction:column;padding:calc(10px + var(--safe-t)) 22px calc(16px + var(--safe-b));
+    z-index:40;
+  }
+  #np.open{transform:translateY(0)}
+  #np .grab{width:40px;height:5px;border-radius:3px;background:#35334d;margin:2px auto 10px}
+  .np-top{display:flex;align-items:center;justify-content:space-between}
+  .np-top .lbl{font-size:11px;letter-spacing:2.5px;color:var(--dim);font-weight:700}
+  .np-cover{
+    width:min(72vw,330px);height:min(72vw,330px);margin:18px auto 8px;border-radius:26px;
+    display:flex;align-items:flex-end;justify-content:center;gap:7px;padding-bottom:56px;
+    box-shadow:0 24px 60px rgba(0,0,0,.55);flex:none;
+  }
+  .np-cover i{display:block;width:11px;border-radius:6px;background:rgba(255,255,255,.9);height:26px}
+  .np-cover i:nth-child(2){height:48px}.np-cover i:nth-child(3){height:66px}.np-cover i:nth-child(4){height:38px}
+  #np.playing .np-cover i{animation:eq 0.9s ease-in-out infinite alternate}
+  #np.playing .np-cover i:nth-child(2){animation-delay:.15s}
+  #np.playing .np-cover i:nth-child(3){animation-delay:.3s}
+  #np.playing .np-cover i:nth-child(4){animation-delay:.45s}
+  .np-title{font-size:21px;font-weight:700;text-align:center;margin-top:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .np-artist{font-size:14px;color:var(--dim);text-align:center;margin-top:4px}
+  .seek{margin-top:20px}
+  .seek input[type=range]{width:100%}
+  .times{display:flex;justify-content:space-between;font-size:11px;color:var(--faint);margin-top:2px}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;height:5px;border-radius:3px;
+    background:linear-gradient(90deg,var(--violet) var(--fill,0%),#2b2b3f var(--fill,0%));outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:#fff;
+    box-shadow:0 2px 8px rgba(0,0,0,.5);
+  }
+  .controls{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding:0 6px}
+  .ctl{font-size:21px;color:var(--dim);padding:10px}
+  .ctl.on{color:var(--violet)}
+  .ctl-main{
+    width:68px;height:68px;border-radius:50%;background:var(--grad);color:#0b0b12;
+    font-size:27px;display:flex;align-items:center;justify-content:center;flex:none;
+    box-shadow:0 10px 28px rgba(167,139,250,.35);
+  }
+  .vol{display:flex;align-items:center;gap:10px;margin-top:16px;color:var(--faint);font-size:14px}
+  .vol input{flex:1}
+  .np-actions{display:flex;gap:10px;margin-top:18px}
+  .np-actions button{
+    flex:1;padding:12px 0;border-radius:14px;background:var(--card);font-size:13px;font-weight:600;color:var(--dim);
+  }
+  .np-actions button.on{color:var(--violet);background:rgba(167,139,250,.14)}
+
+  /* ---------- sheets (EQ / lyrics / sleep) ---------- */
+  .sheet{
+    position:fixed;left:0;right:0;bottom:0;top:18%;background:var(--bg2);z-index:60;
+    border-radius:24px 24px 0 0;transform:translateY(103%);transition:transform .35s cubic-bezier(.32,.72,.24,1);
+    display:flex;flex-direction:column;padding:10px 20px calc(14px + var(--safe-b));
+    box-shadow:0 -18px 50px rgba(0,0,0,.6);
+  }
+  .sheet.open{transform:translateY(0)}
+  .sheet .grab{width:40px;height:5px;border-radius:3px;background:#35334d;margin:2px auto 12px}
+  .sheet h2{font-size:17px;margin-bottom:4px}
+  .sheet .sub{font-size:12px;color:var(--dim);margin-bottom:14px;line-height:1.5}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .chip{padding:8px 14px;border-radius:999px;background:var(--card);font-size:12px;font-weight:600;color:var(--dim)}
+  .chip.on{background:var(--grad);color:#0b0b12}
+  .band{display:flex;align-items:center;gap:12px;margin-bottom:11px}
+  .band label{width:46px;font-size:12px;color:var(--dim);text-align:right;font-weight:600}
+  .band input{flex:1}
+  .band output{width:38px;font-size:11px;color:var(--faint)}
+  #lyricsBody{flex:1;overflow-y:auto;padding:6px 2px;scrollbar-width:none}
+  #lyricsBody::-webkit-scrollbar{display:none}
+  .lrc-line{padding:7px 4px;font-size:16px;color:var(--faint);text-align:center;transition:color .2s,font-size .2s;line-height:1.45}
+  .lrc-line.cur{color:var(--text);font-weight:700;font-size:18px}
+  .big-btn{
+    width:100%;padding:14px;border-radius:14px;background:var(--grad);color:#0b0b12;
+    font-weight:700;font-size:15px;margin-top:10px;
+  }
+  .ghost-btn{
+    width:100%;padding:13px;border-radius:14px;background:var(--card);color:var(--text);
+    font-weight:600;font-size:14px;margin-top:10px;
+  }
+  .sleep-row{display:flex;gap:8px;flex-wrap:wrap}
+  #toast{
+    position:fixed;left:50%;bottom:calc(96px + var(--safe-b));transform:translateX(-50%) translateY(20px);
+    background:#23233a;color:var(--text);padding:11px 18px;border-radius:999px;font-size:13px;
+    opacity:0;pointer-events:none;transition:.3s;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.5);
+    max-width:88vw;text-align:center;
+  }
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="logo">SONO<span>RA</span></div>
+    <button class="icon-btn" id="importBtn" title="Import songs">＋</button>
+  </header>
+  <main id="main">
+    <div id="installHint">📲 <b>Add SONORA to your Home Screen:</b> tap the Share button in Safari, then <b>Add to Home Screen</b>. After that it opens like an app — even offline.</div>
+    <div class="search"><span style="color:var(--faint)">🔍</span><input id="search" type="search" placeholder="Search songs"></div>
+    <div class="segments">
+      <button class="seg on" data-seg="all">All Songs</button>
+      <button class="seg" data-seg="offline">Downloaded</button>
+    </div>
+    <div id="list"></div>
+  </main>
+  <div id="mini">
+    <div class="cover" id="miniCover"><i></i><i></i><i></i><i></i></div>
+    <div class="t-meta">
+      <div class="t-title" id="miniTitle">—</div>
+      <div class="t-sub" id="miniArtist">—</div>
+    </div>
+    <button id="miniPlay">▶</button>
+    <button id="miniNext">⏭</button>
+  </div>
+</div>
+
+<!-- Now Playing -->
+<div id="np">
+  <div class="grab"></div>
+  <div class="np-top">
+    <button class="ctl" id="npClose">⌄</button>
+    <div class="lbl">NOW PLAYING</div>
+    <button class="ctl" id="npSleepBtn">🌙</button>
+  </div>
+  <div class="np-cover" id="npCover"><i></i><i></i><i></i><i></i></div>
+  <div class="np-title" id="npTitle">—</div>
+  <div class="np-artist" id="npArtist">—</div>
+  <div class="seek">
+    <input type="range" id="seek" min="0" max="1000" value="0">
+    <div class="times"><span id="tCur">0:00</span><span id="tDur">0:00</span></div>
+  </div>
+  <div class="controls">
+    <button class="ctl" id="btnShuffle">🔀</button>
+    <button class="ctl" id="btnPrev" style="font-size:26px">⏮</button>
+    <button class="ctl-main" id="btnPlay">▶</button>
+    <button class="ctl" id="btnNext" style="font-size:26px">⏭</button>
+    <button class="ctl" id="btnRepeat">🔁</button>
+  </div>
+  <div class="vol"><span>🔈</span><input type="range" id="vol" min="0" max="100" value="90"><span>🔊</span></div>
+  <div class="np-actions">
+    <button id="npEqBtn">🎚 Equalizer</button>
+    <button id="npLrcBtn">🎤 Lyrics</button>
+    <button id="npDlBtn">⬇ Download</button>
+  </div>
+</div>
+
+<!-- EQ sheet -->
+<div class="sheet" id="eqSheet">
+  <div class="grab"></div>
+  <h2>Equalizer · 10-band</h2>
+  <div class="sub">Works on every song in the web edition — streams, downloads and imports. Drag a band, or tap a preset.</div>
+  <div class="chips" id="presets"></div>
+  <div id="bands"></div>
+  <button class="ghost-btn" data-close>Done</button>
+</div>
+
+<!-- Lyrics sheet -->
+<div class="sheet" id="lrcSheet">
+  <div class="grab"></div>
+  <h2>Lyrics</h2>
+  <div class="sub" id="lrcSub">Synced LRC lyrics for the current song.</div>
+  <div id="lyricsBody"></div>
+  <button class="big-btn" id="lrcImportBtn">Import .lrc file for this song</button>
+  <button class="ghost-btn" data-close>Done</button>
+</div>
+
+<!-- Sleep sheet -->
+<div class="sheet" id="sleepSheet">
+  <div class="grab"></div>
+  <h2>Sleep timer</h2>
+  <div class="sub" id="sleepSub">Playback stops automatically when the timer ends.</div>
+  <div class="sleep-row" id="sleepRow"></div>
+  <button class="ghost-btn" data-close>Done</button>
+</div>
+
+<div id="toast"></div>
+<input type="file" id="filePicker" accept="audio/*" multiple hidden>
+<input type="file" id="lrcPicker" accept=".lrc,text/plain" hidden>
+<audio id="audio" crossorigin="anonymous" preload="auto"></audio>
+
+<script>
+'use strict';
+/* ================= SONORA web edition ================= */
+const $ = (s) => document.querySelector(s);
+const DEMO = [];
+for (let n = 1; n <= 8; n++) {
+  DEMO.push({
+    id: 'demo-' + n,
+    title: 'SoundHelix Song ' + n,
+    artist: 'SoundHelix · Demo',
+    kind: 'demo',
+    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-' + n + '.mp3',
+    hue: [262, 200, 160, 20, 320, 120, 280, 45][n - 1]
+  });
+}
+
+/* ---------- IndexedDB ---------- */
+let db = null;
+function idbOpen() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open('sonora-pwa', 1);
+    r.onupgradeneeded = () => {
+      r.result.createObjectStore('blobs');
+      r.result.createObjectStore('meta');
+    };
+    r.onsuccess = () => { db = r.result; res(); };
+    r.onerror = () => rej(r.error);
+  });
+}
+function idb(store, mode, fn) {
+  return new Promise((res, rej) => {
+    const tx = db.transaction(store, mode);
+    const req = fn(tx.objectStore(store));
+    if (req) { req.onsuccess = () => res(req.result); req.onerror = () => rej(req.error); }
+    else tx.oncomplete = () => res();
+    tx.onerror = () => rej(tx.error);
+  });
+}
+const blobGet = (id) => idb('blobs', 'readonly', (s) => s.get(id));
+const blobPut = (id, b) => idb('blobs', 'readwrite', (s) => s.put(b, id));
+const blobDel = (id) => idb('blobs', 'readwrite', (s) => s.delete(id));
+const metaAll = () => idb('meta', 'readonly', (s) => s.getAll());
+const metaPut = (m) => idb('meta', 'readwrite', (s) => s.put(m, m.id));
+const metaDel = (id) => idb('meta', 'readwrite', (s) => s.delete(id));
+const blobKeys = () => idb('blobs', 'readonly', (s) => s.getAllKeys());
+
+/* ---------- state ---------- */
+let tracks = [];            // full library
+let downloaded = new Set(); // ids with a local blob
+let queue = [], qIndex = -1, currentId = null;
+let shuffle = false, repeat = 'off'; // off | all | one
+let segment = 'all', query = '';
+let sleepTimer = null, sleepMins = 0;
+const audio = $('#audio');
+
+function toast(msg, ms) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.classList.remove('show'), ms || 2400);
+}
+function fmt(sec) {
+  if (!isFinite(sec) || sec == null) return '0:00';
+  sec = Math.max(0, Math.floor(sec));
+  return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+}
+function coverBg(hue) {
+  return 'background:linear-gradient(135deg,hsl(' + hue + ',72%,55%),hsl(' + ((hue + 60) % 360) + ',80%,38%))';
+}
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ---------- library ---------- */
+async function loadLibrary() {
+  tracks = DEMO.slice();
+  try {
+    const metas = await metaAll();
+    metas.forEach((m) => tracks.push(m));
+    const keys = await blobKeys();
+    downloaded = new Set(keys);
+  } catch (e) { /* storage unavailable: stream-only mode */ }
+  renderList();
+}
+function visibleTracks() {
+  let list = tracks;
+  if (segment === 'offline') list = list.filter((t) => downloaded.has(t.id));
+  if (query) {
+    const q = query.toLowerCase();
+    list = list.filter((t) => (t.title + ' ' + t.artist).toLowerCase().includes(q));
+  }
+  return list;
+}
+function renderList() {
+  const list = visibleTracks();
+  const el = $('#list');
+  if (!list.length) {
+    el.innerHTML = '<div class="empty">' + (segment === 'offline'
+      ? 'No downloaded songs yet.<br>Tap ⬇ on any song to save it for offline listening.'
+      : 'No songs found.') + '</div>';
+    return;
+  }
+  el.innerHTML = list.map((t) => {
+    const isCur = t.id === currentId;
+    const isOff = downloaded.has(t.id);
+    return '<div class="row' + (isCur ? ' playing' + (audio.paused ? ' paused' : '') : '') + '" data-id="' + t.id + '">' +
+      '<div class="cover" style="' + coverBg(t.hue || 262) + '"><i></i><i></i><i></i><i></i></div>' +
+      '<div class="t-meta"><div class="t-title">' + esc(t.title) +
+      (t.kind === 'demo' ? '<span class="badge">DEMO</span>' : '') +
+      (isOff ? '<span class="badge off">OFFLINE</span>' : '') +
+      '</div><div class="t-sub">' + esc(t.artist) + '</div></div>' +
+      '<button class="dl-btn' + (isOff ? ' done' : '') + '" data-dl="' + t.id + '">' + (isOff ? '✓' : '⬇') + '</button>' +
+      '</div>';
+  }).join('');
+  el.querySelectorAll('.row').forEach((row) => {
+    row.addEventListener('click', (e) => {
+      if (e.target.closest('[data-dl]')) return;
+      playFromList(row.dataset.id);
+    });
+  });
+  el.querySelectorAll('[data-dl]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleDownload(btn.dataset.dl);
+    });
+  });
+}
+
+/* ---------- downloads & imports ---------- */
+async function toggleDownload(id) {
+  const t = tracks.find((x) => x.id === id);
+  if (!t) return;
+  if (downloaded.has(id)) {
+    if (t.kind === 'imported') {
+      if (!confirm('Delete imported song "' + t.title + '"?')) return;
+      await blobDel(id); await metaDel(id);
+      tracks = tracks.filter((x) => x.id !== id);
+      if (currentId === id) { audio.pause(); audio.removeAttribute('src'); currentId = null; $('#mini').classList.remove('show'); }
+      downloaded.delete(id);
+      toast('Removed');
+    } else {
+      if (!confirm('Remove the offline copy of "' + t.title + '"?')) return;
+      await blobDel(id);
+      downloaded.delete(id);
+      toast('Offline copy removed');
+    }
+    renderList(); syncNpButtons();
+    return;
+  }
+  if (!t.url) { toast('This song has no stream to download'); return; }
+  toast('Downloading "' + t.title + '"…');
+  try {
+    const res = await fetch(t.url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const blob = await res.blob();
+    await blobPut(id, blob);
+    downloaded.add(id);
+    toast('Saved for offline · ' + (blob.size / 1048576).toFixed(1) + ' MB');
+  } catch (e) {
+    toast('Download failed — check your connection');
+  }
+  renderList(); syncNpButtons();
+}
+
+$('#filePicker').addEventListener('change', async (e) => {
+  const files = Array.from(e.target.files || []);
+  if (!files.length) return;
+  let added = 0;
+  for (const f of files) {
+    const id = 'imp-' + Date.now() + '-' + Math.floor(Math.random() * 1e6);
+    const meta = {
+      id, kind: 'imported',
+      title: f.name.replace(/\.[^.]+$/, ''),
+      artist: 'Imported file',
+      hue: Math.floor(Math.random() * 360)
+    };
+    try {
+      await blobPut(id, f);
+      await metaPut(meta);
+      tracks.push(meta);
+      downloaded.add(id);
+      added++;
+    } catch (err) { /* skip failed file */ }
+  }
+  e.target.value = '';
+  toast(added ? added + ' song(s) imported' : 'Import failed');
+  renderList();
+});
+$('#importBtn').addEventListener('click', () => $('#filePicker').click());
+
+/* ---------- audio engine + EQ ---------- */
+const FREQS = [31, 62, 125, 250, 500, 1000, 2000, 4000, 8000, 16000];
+const PRESETS = {
+  'Flat':       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  'Bass Boost': [6, 5, 4, 2, 0, 0, 0, 0, 0, 0],
+  'Vocal':      [-2, -1, 0, 2, 4, 4, 3, 2, 0, 0],
+  'Pop':        [-1, 1, 2, 3, 2, 0, 1, 2, 3, 2],
+  'Rock':       [4, 3, 2, 1, 0, 1, 2, 3, 4, 4],
+  'Treble':     [0, 0, 0, 0, 0, 1, 2, 4, 5, 6]
+};
+let actx = null, filters = [], gainNode = null, eqReady = false;
+let eqGains = JSON.parse(localStorage.getItem('sonora-eq') || 'null') || PRESETS['Flat'].slice();
+let curPreset = localStorage.getItem('sonora-eq-preset') || 'Flat';
+
+function ensureEngine() {
+  if (actx) { if (actx.state === 'suspended') actx.resume(); return; }
+  try {
+    actx = new (window.AudioContext || window.webkitAudioContext)();
+    const src = actx.createMediaElementSource(audio);
+    filters = FREQS.map((f, i) => {
+      const bi = actx.createBiquadFilter();
+      bi.type = i === 0 ? 'lowshelf' : (i === FREQS.length - 1 ? 'highshelf' : 'peaking');
+      bi.frequency.value = f;
+      bi.Q.value = 1.0;
+      bi.gain.value = eqGains[i] || 0;
+      return bi;
+    });
+    let node = src;
+    filters.forEach((bi) => { node.connect(bi); node = bi; });
+    gainNode = actx.createGain();
+    gainNode.gain.value = ($('#vol').value || 90) / 100;
+    node.connect(gainNode);
+    gainNode.connect(actx.destination);
+    eqReady = true;
+  } catch (e) { eqReady = false; }
+}
+function applyEq() {
+  filters.forEach((bi, i) => { if (bi) bi.gain.value = eqGains[i]; });
+  localStorage.setItem('sonora-eq', JSON.stringify(eqGains));
+  localStorage.setItem('sonora-eq-preset', curPreset);
+  document.querySelectorAll('#presets .chip').forEach((c) =>
+    c.classList.toggle('on', c.textContent === curPreset));
+  document.querySelectorAll('.band output').forEach((o, i) =>
+    o.textContent = (eqGains[i] > 0 ? '+' : '') + eqGains[i] + ' dB');
+  document.querySelectorAll('.band input').forEach((inp, i) => inp.value = eqGains[i]);
+}
+function buildEq() {
+  $('#presets').innerHTML = Object.keys(PRESETS).map((n) =>
+    '<button class="chip" data-p="' + n + '">' + n + '</button>').join('');
+  document.querySelectorAll('#presets .chip').forEach((c) =>
+    c.addEventListener('click', () => {
+      curPreset = c.dataset.p;
+      eqGains = PRESETS[curPreset].slice();
+      ensureEngine(); applyEq();
+    }));
+  $('#bands').innerHTML = FREQS.map((f, i) =>
+    '<div class="band"><label>' + (f >= 1000 ? (f / 1000) + ' kHz' : f + ' Hz') + '</label>' +
+    '<input type="range" min="-12" max="12" step="1" value="' + eqGains[i] + '" data-band="' + i + '">' +
+    '<output>' + eqGains[i] + ' dB</output></div>').join('');
+  document.querySelectorAll('.band input').forEach((inp) =>
+    inp.addEventListener('input', () => {
+      eqGains[+inp.dataset.band] = +inp.value;
+      curPreset = 'Custom';
+      ensureEngine(); applyEq();
+    }));
+  applyEq();
+}
+
+/* ---------- playback ---------- */
+let blobUrl = null;
+async function trackSource(t) {
+  if (downloaded.has(t.id)) {
+    const blob = await blobGet(t.id);
+    if (blob) {
+      if (blobUrl) URL.revokeObjectURL(blobUrl);
+      blobUrl = URL.createObjectURL(blob);
+      return blobUrl;
+    }
+  }
+  return t.url || null;
+}
+async function playTrack(id, autoplay) {
+  const t = tracks.find((x) => x.id === id);
+  if (!t) return;
+  currentId = id;
+  const src = await trackSource(t);
+  if (!src) { toast('No playable source for this song'); return; }
+  if (audio.dataset.tid !== id) {
+    audio.src = src;
+    audio.dataset.tid = id;
+  }
+  ensureEngine();
+  updateNowPlaying();
+  renderList();
+  if (autoplay !== false) {
+    audio.play().catch(() => toast('Playback blocked — tap play'));
+  }
+}
+function playFromList(id) {
+  const ids = visibleTracks().map((t) => t.id);
+  queue = ids.slice();
+  if (shuffle) {
+    queue = [id].concat(ids.filter((x) => x !== id).sort(() => Math.random() - 0.5));
+    qIndex = 0;
+  } else {
+    qIndex = ids.indexOf(id);
+  }
+  playTrack(id);
+  openNp();
+}
+function next(auto) {
+  if (!queue.length) return;
+  if (auto && repeat === 'one') { audio.currentTime = 0; audio.play(); return; }
+  let n = qIndex + 1;
+  if (n >= queue.length) {
+    if (repeat === 'all' || !auto) n = 0;
+    else { audio.pause(); return; }
+  }
+  qIndex = n;
+  playTrack(queue[qIndex]);
+}
+function prev() {
+  if (audio.currentTime > 3 || qIndex <= 0) { audio.currentTime = 0; return; }
+  qIndex--;
+  playTrack(queue[qIndex]);
+}
+function updateNowPlaying() {
+  const t = tracks.find((x) => x.id === currentId);
+  if (!t) return;
+  $('#npTitle').textContent = t.title;
+  $('#npArtist').textContent = t.artist;
+  $('#miniTitle').textContent = t.title;
+  $('#miniArtist').textContent = t.artist;
+  $('#npCover').style.cssText = coverBg(t.hue || 262);
+  $('#miniCover').style.cssText = coverBg(t.hue || 262);
+  $('#mini').classList.add('show');
+  syncPlayIcons(); syncNpButtons(); renderLyrics();
+  if ('mediaSession' in navigator) {
+    try {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: t.title, artist: t.artist, album: 'SONORA',
+        artwork: [{ src: 'icon-512.png', sizes: '512x512', type: 'image/png' }]
+      });
+    } catch (e) {}
+  }
+}
+function syncPlayIcons() {
+  const icon = audio.paused ? '▶' : '⏸';
+  $('#btnPlay').textContent = icon;
+  $('#miniPlay').textContent = icon;
+  $('#np').classList.toggle('playing', !audio.paused && !!currentId);
+  document.querySelectorAll('.row.playing').forEach((r) =>
+    r.classList.toggle('paused', audio.paused));
+}
+function syncNpButtons() {
+  const isOff = currentId && downloaded.has(currentId);
+  const t = tracks.find((x) => x.id === currentId);
+  $('#npDlBtn').textContent = isOff ? '✓ Saved offline' : '⬇ Download';
+  $('#npDlBtn').classList.toggle('on', !!isOff);
+  $('#btnShuffle').classList.toggle('on', shuffle);
+  $('#btnRepeat').classList.toggle('on', repeat !== 'off');
+  $('#btnRepeat').textContent = repeat === 'one' ? '🔂' : '🔁';
+  if (t && t.kind === 'imported') $('#npDlBtn').textContent = '✓ On device';
+}
+
+/* transport events */
+function togglePlay() {
+  if (!currentId) {
+    const list = visibleTracks();
+    if (list.length) playFromList(list[0].id);
+    return;
+  }
+  ensureEngine();
+  if (audio.paused) audio.play().catch(() => {}); else audio.pause();
+}
+$('#btnPlay').addEventListener('click', togglePlay);
+$('#miniPlay').addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
+$('#btnNext').addEventListener('click', () => next(false));
+$('#miniNext').addEventListener('click', (e) => { e.stopPropagation(); next(false); });
+$('#btnPrev').addEventListener('click', prev);
+$('#btnShuffle').addEventListener('click', () => {
+  shuffle = !shuffle;
+  toast(shuffle ? 'Shuffle on' : 'Shuffle off');
+  syncNpButtons();
+});
+$('#btnRepeat').addEventListener('click', () => {
+  repeat = repeat === 'off' ? 'all' : (repeat === 'all' ? 'one' : 'off');
+  toast('Repeat: ' + repeat);
+  syncNpButtons();
+});
+audio.addEventListener('play', syncPlayIcons);
+audio.addEventListener('pause', syncPlayIcons);
+audio.addEventListener('ended', () => next(true));
+audio.addEventListener('error', () => {
+  if (currentId) toast('Could not play this song');
+});
+audio.addEventListener('loadedmetadata', () => {
+  $('#tDur').textContent = fmt(audio.duration);
+});
+audio.addEventListener('timeupdate', () => {
+  const d = audio.duration || 0, c = audio.currentTime || 0;
+  const seek = $('#seek');
+  if (document.activeElement !== seek) {
+    seek.value = d ? Math.round((c / d) * 1000) : 0;
+    seek.style.setProperty('--fill', (d ? (c / d) * 100 : 0) + '%');
+  }
+  $('#tCur').textContent = fmt(c);
+  syncLyrics(c);
+  if ('mediaSession' in navigator && navigator.mediaSession.setPositionState && d) {
+    try { navigator.mediaSession.setPositionState({ duration: d, position: c, playbackRate: audio.playbackRate }); } catch (e) {}
+  }
+});
+$('#seek').addEventListener('input', (e) => {
+  const d = audio.duration || 0;
+  const v = +e.target.value;
+  e.target.style.setProperty('--fill', (v / 10) + '%');
+  if (d) { audio.currentTime = (v / 1000) * d; $('#tCur').textContent = fmt(audio.currentTime); }
+});
+$('#vol').addEventListener('input', (e) => {
+  const v = +e.target.value / 100;
+  if (gainNode) gainNode.gain.value = v; else audio.volume = v;
+  e.target.style.setProperty('--fill', e.target.value + '%');
+});
+$('#npDlBtn').addEventListener('click', () => { if (currentId) toggleDownload(currentId); });
+if ('mediaSession' in navigator) {
+  const ms = navigator.mediaSession;
+  try {
+    ms.setActionHandler('play', () => audio.play());
+    ms.setActionHandler('pause', () => audio.pause());
+    ms.setActionHandler('nexttrack', () => next(false));
+    ms.setActionHandler('previoustrack', prev);
+    ms.setActionHandler('seekto', (d) => { if (d.seekTime != null) audio.currentTime = d.seekTime; });
+  } catch (e) {}
+}
+
+/* ---------- now playing open/close ---------- */
+function openNp() { $('#np').classList.add('open'); }
+function closeNp() { $('#np').classList.remove('open'); }
+$('#mini').addEventListener('click', openNp);
+$('#npClose').addEventListener('click', closeNp);
+
+/* ---------- sheets ---------- */
+function openSheet(id) { $(id).classList.add('open'); }
+function closeSheets() { document.querySelectorAll('.sheet').forEach((s) => s.classList.remove('open')); }
+document.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', closeSheets));
+$('#npEqBtn').addEventListener('click', () => openSheet('#eqSheet'));
+$('#npLrcBtn').addEventListener('click', () => openSheet('#lrcSheet'));
+$('#npSleepBtn').addEventListener('click', () => openSheet('#sleepSheet'));
+
+/* ---------- sleep timer ---------- */
+function setSleep(mins) {
+  sleepMins = mins;
+  if (sleepTimer) { clearTimeout(sleepTimer); sleepTimer = null; }
+  if (mins > 0) {
+    sleepTimer = setTimeout(() => { audio.pause(); toast('Sleep timer — playback stopped'); setSleep(0); }, mins * 60000);
+    toast('Sleep timer: ' + mins + ' min');
+  }
+  $('#sleepSub').textContent = mins > 0
+    ? 'Playback will stop in ' + mins + ' minutes.'
+    : 'Playback stops automatically when the timer ends.';
+  document.querySelectorAll('#sleepRow .chip').forEach((c) =>
+    c.classList.toggle('on', +c.dataset.m === mins));
+  closeSheets();
+}
+$('#sleepRow').innerHTML = [0, 15, 30, 45, 60].map((m) =>
+  '<button class="chip" data-m="' + m + '">' + (m === 0 ? 'Off' : m + ' min') + '</button>').join('');
+document.querySelectorAll('#sleepRow .chip').forEach((c) =>
+  c.addEventListener('click', () => setSleep(+c.dataset.m)));
+
+/* ---------- lyrics (LRC) ---------- */
+let lrcLines = [];
+function parseLrc(text) {
+  const out = [];
+  String(text).split(/\r?\n/).forEach((line) => {
+    const stamps = [...line.matchAll(/\[(\d+):(\d+(?:\.\d+)?)\]/g)];
+    const txt = line.replace(/\[[^\]]*\]/g, '').trim();
+    stamps.forEach((m) => out.push({ t: (+m[1]) * 60 + (+m[2]), txt }));
+  });
+  return out.sort((a, b) => a.t - b.t);
+}
+async function currentMeta() {
+  const metas = await metaAll();
+  return metas.find((m) => m.id === currentId) || null;
+}
+async function renderLyrics() {
+  const body = $('#lyricsBody');
+  lrcLines = [];
+  if (!currentId) { body.innerHTML = '<div class="empty">Nothing playing.</div>'; return; }
+  let lrc = null;
+  const t = tracks.find((x) => x.id === currentId);
+  if (t && t.lrc) lrc = t.lrc;
+  if (!lrc) {
+    const m = await currentMeta().catch(() => null);
+    if (m && m.lrc) lrc = m.lrc;
+  }
+  if (!lrc) {
+    body.innerHTML = '<div class="empty">No lyrics for this song yet.<br>Import a synced .lrc file and it will follow the music line by line.</div>';
+    return;
+  }
+  lrcLines = parseLrc(lrc);
+  body.innerHTML = lrcLines.map((l, i) =>
+    '<div class="lrc-line" data-i="' + i + '">' + esc(l.txt || '♪') + '</div>').join('') ||
+    '<div class="empty">Could not parse that .lrc file.</div>';
+}
+let lastLrcIdx = -1;
+function syncLyrics(cur) {
+  if (!lrcLines.length) return;
+  let idx = -1;
+  for (let i = 0; i < lrcLines.length; i++) if (lrcLines[i].t <= cur) idx = i;
+  if (idx === lastLrcIdx) return;
+  lastLrcIdx = idx;
+  document.querySelectorAll('.lrc-line').forEach((el, i) =>
+    el.classList.toggle('cur', i === idx));
+  const curEl = document.querySelector('.lrc-line.cur');
+  if (curEl && $('#lrcSheet').classList.contains('open'))
+    curEl.scrollIntoView({ block: 'center', behavior: 'smooth' });
+}
+$('#lrcImportBtn').addEventListener('click', () => $('#lrcPicker').click());
+$('#lrcPicker').addEventListener('change', async (e) => {
+  const f = (e.target.files || [])[0];
+  e.target.value = '';
+  if (!f || !currentId) return;
+  const text = await f.text();
+  const t = tracks.find((x) => x.id === currentId);
+  let m = await currentMeta().catch(() => null);
+  if (!m) m = Object.assign({}, t);
+  m.lrc = text;
+  try { await metaPut(m); } catch (err) {}
+  if (t) t.lrc = text;
+  lastLrcIdx = -1;
+  renderLyrics();
+  toast('Lyrics saved for this song');
+});
+
+/* ---------- search & segments ---------- */
+$('#search').addEventListener('input', (e) => { query = e.target.value.trim(); renderList(); });
+document.querySelectorAll('.seg').forEach((s) =>
+  s.addEventListener('click', () => {
+    segment = s.dataset.seg;
+    document.querySelectorAll('.seg').forEach((x) => x.classList.toggle('on', x === s));
+    renderList();
+  }));
+
+/* ---------- install hint & service worker ---------- */
+(function () {
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if (!standalone && isIOS) $('#installHint').style.display = 'block';
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+})();
+
+/* ---------- init ---------- */
+$('#vol').style.setProperty('--fill', '90%');
+buildEq();
+idbOpen().then(loadLibrary).catch(loadLibrary);
+</script>
+</body>
+</html>

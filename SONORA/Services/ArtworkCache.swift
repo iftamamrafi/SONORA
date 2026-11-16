@@ -3,7 +3,7 @@ import Foundation
 import UIKit
 
 /// Simple in-memory artwork cache; images are also stored on TrackEntity (external storage).
-final class ArtworkCache {
+final class ArtworkCache: @unchecked Sendable { // NSCache is thread-safe
     static let shared = ArtworkCache()
     private let cache = NSCache<NSString, UIImage>()
     private init() { cache.countLimit = 200 }

@@ -9,8 +9,11 @@ final class LiveActivityManager {
     private init() {}
     func update(track: TrackSnapshot, isPlaying: Bool, progress: Double) {
         let state = NowPlayingActivityAttributes.ContentState(title: track.title, artist: track.artistName, isPlaying: isPlaying, progress: progress)
+        Task { @MainActor in await self.applyUpdate(state: state) }
+    }
+    private func applyUpdate(state: NowPlayingActivityAttributes.ContentState) async {
         if let activity {
-            Task { await activity.update(ActivityContent(state: state, staleDate: nil)) }
+            await activity.update(ActivityContent(state: state, staleDate: nil))
         } else {
             guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
             activity = try? Activity.request(attributes: NowPlayingActivityAttributes(),
@@ -18,8 +21,11 @@ final class LiveActivityManager {
         }
     }
     func end() {
+        Task { @MainActor in await self.applyEnd() }
+    }
+    private func applyEnd() async {
         let current = activity
         activity = nil
-        Task { await current?.end(nil, dismissalPolicy: .immediate) }
+        await current?.end(nil, dismissalPolicy: .immediate)
     }
 }
